@@ -41,7 +41,7 @@ public class MainActivity extends NavBaseActivity {
     //*List of the food is in the fridge
     protected CharSequence[] _useFridge = {"Frozen mix-Veggies", "Brocolli", "Cabbage", "Beans", "Tomato", "Milk", "ButterNut","Pumpkin", "Green-Chillies", "Jalapeno", "Butter", "Cheese", "Eggplant","Egg"};
     protected boolean[] _fridgeSelection = new boolean[_useFridge.length];
-
+    //set up button variable
     protected  Button advanceSearchButton;
     protected Button _cuisineButton;
     protected Button _allergiesButton;
@@ -62,6 +62,7 @@ public class MainActivity extends NavBaseActivity {
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
         init();
+        //decleration for searchbox
         et = (EditText)findViewById(R.id.EditText01);
 
         et.setOnKeyListener(new View.OnKeyListener() {
@@ -114,7 +115,7 @@ public class MainActivity extends NavBaseActivity {
         _allergySelection = new boolean[_allergies.length];
         _fridgeSelection = new boolean[_useFridge.length];
 
-        //Declarations
+        //Declarations for advancesearch button
         advanceSearchButton = (Button) findViewById(R.id.advancedbutton);
         _cuisineButton = (Button) findViewById(R.id.cuisinebutton);
         //onclick function
@@ -220,11 +221,6 @@ public class MainActivity extends NavBaseActivity {
         }
     }
 
-    /**
-
-     * @param id
-     * @return
-     */
     @Override
     public Dialog onCreateDialog(int id) {
         Log.i("output", "MainActivity");
@@ -260,7 +256,8 @@ public class MainActivity extends NavBaseActivity {
     }
 
     /**
-     *
+     *make selected checkbox item from filter search
+     * create id for each options
      */
     public class DialogSelectionClickHandler implements DialogInterface.OnMultiChoiceClickListener {
         CharSequence[] current;
