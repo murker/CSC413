@@ -10,9 +10,13 @@ import java.io.BufferedReader;
 import java.io.Closeable;
 import java.io.IOException;
 import java.io.InputStreamReader;
-
 /*
-Displays an EULA ("End User License Agreement") that the user has to accept
+   Created by Poulomi
+ */
+
+/**
+ * The idea got from this book "The Android Developer's cookbook"
+ *Displays an EULA ("End User License Agreement") that the user has to accept
 before using the application.
  */
 
@@ -29,9 +33,8 @@ public class Eula {
         void onEulaAgreedTo();
     }
     /*
-    Displays the EULA if necessary
-    This method should be called from the onCreate() method of  main Activity.
-     *
+    *Displays the EULA if necessary
+     *  this method should be called from the onCreate() method of  main Activity.
      * activity The Activity to finish if the user rejects the EULA.
      * @return Whether the user has agreed already.
      */

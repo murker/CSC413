@@ -1,8 +1,12 @@
 package t4.csc413.smartchef;
 
 /**
- * Created by poulomirajarshi on 10/12/15.
+ * Created by Poulomi
  */
+/**
+ * this class is for enabling Gps on device
+ * method used for asking user whether they want to enable either GPS or other location
+ *  */
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;

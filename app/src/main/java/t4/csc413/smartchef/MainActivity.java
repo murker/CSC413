@@ -32,11 +32,13 @@ public class MainActivity extends NavBaseActivity {
     private static MainActivity instance;
     private String[] navMenuTitles;
     private TypedArray navMenuIcons;
-
+    ///*List of the food cuisine type
     protected CharSequence[] _cuisine = {"American", "Indian", "Italian", "Chinese", "Thai", "French", "Spanish", "Philipino","Korean",};
     protected boolean[] _selections = new boolean[_cuisine.length];
+    //*List of the food allergies
     protected CharSequence[] _allergies = {"Pecan-free", "Gluten-free", "Seafood", "Lactose-free", };
     protected boolean[] _allergySelection = new boolean[_allergies.length];
+    //*List of the food is in the fridge
     protected CharSequence[] _useFridge = {"Frozen mix-Veggies", "Brocolli", "Cabbage", "Beans", "Tomato", "Milk", "ButterNut","Pumpkin", "Green-Chillies", "Jalapeno", "Butter", "Cheese", "Eggplant","Egg"};
     protected boolean[] _fridgeSelection = new boolean[_useFridge.length];
 
@@ -51,7 +53,6 @@ public class MainActivity extends NavBaseActivity {
     private String selection;
     private String allergySelection = "";
     private String fridgeSelection = "";
-
     private boolean visible = false;
 
     @Override
@@ -64,6 +65,15 @@ public class MainActivity extends NavBaseActivity {
         et = (EditText)findViewById(R.id.EditText01);
 
         et.setOnKeyListener(new View.OnKeyListener() {
+            /**
+             *Called when a hardware key is dispatched to a view.
+             * This allows listeners to get a chance to respond before the target view.
+             * @param v
+             * @param keyCode
+             * @param event
+             * @return search result,true if the listener has consumed the event, false otherwise.
+             */
+
 
             public boolean onKey(View v, int keyCode, KeyEvent event) {
                 if ((event.getAction() == KeyEvent.ACTION_DOWN) && (keyCode == KeyEvent.KEYCODE_ENTER)) {
@@ -93,8 +103,9 @@ public class MainActivity extends NavBaseActivity {
                 return true;
             }
         });
-        textView = (TextView) findViewById(R.id.fridgetext);
 
+      // Declerations
+        textView = (TextView) findViewById(R.id.fridgetext);
         _allergies = SearchTools.getSupportedAllergies();
         _cuisine = SearchTools.getSupportedCuisines();
         _useFridge = FridgeDB.GetIngredientsForFridgeButton();
@@ -103,12 +114,11 @@ public class MainActivity extends NavBaseActivity {
         _allergySelection = new boolean[_allergies.length];
         _fridgeSelection = new boolean[_useFridge.length];
 
+        //Declarations
         advanceSearchButton = (Button) findViewById(R.id.advancedbutton);
-
-
-
-
         _cuisineButton = (Button) findViewById(R.id.cuisinebutton);
+        //onclick function
+        //filter search options invisible when main activity starts
         _cuisineButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -129,6 +139,9 @@ public class MainActivity extends NavBaseActivity {
 
         _goToFridgeButton = (Button) findViewById(R.id.gotofridge);
         _goToFridgeButton.setOnClickListener(new View.OnClickListener() {
+            /**
+             * @param view
+             */
             @Override
             public void onClick(View view) {
                 Intent i = new Intent(getApplicationContext(), FridgeLayout.class);
@@ -149,10 +162,12 @@ public class MainActivity extends NavBaseActivity {
 
 
 
-
-
         advanceSearchButton.setVisibility(View.VISIBLE);
         advanceSearchButton.setOnClickListener(new View.OnClickListener() {
+            /**
+             *
+             * @param view
+             */
             @Override
             public void onClick(View view) {
                 Toggle();
@@ -160,11 +175,11 @@ public class MainActivity extends NavBaseActivity {
         });
 
 
-
+        //if GPS location service setting is not enable
         LocationManager lm = (LocationManager) getSystemService(LOCATION_SERVICE);
         if(!lm.isProviderEnabled(LocationManager.GPS_PROVIDER))
             EnGps.displayPromptForEnablingGPS(this);
-
+        //show EULA
         Eula.show(this);
 
         // Nav Drawer
@@ -180,6 +195,9 @@ public class MainActivity extends NavBaseActivity {
 
     }
 
+    /**
+     *This method is for visible/invisible the filter search options
+     */
     private void Toggle(){
         if(visible == true){
             _cuisineButton.setVisibility(View.GONE);
@@ -202,14 +220,19 @@ public class MainActivity extends NavBaseActivity {
         }
     }
 
+    /**
 
+     * @param id
+     * @return
+     */
     @Override
     public Dialog onCreateDialog(int id) {
         Log.i("output", "MainActivity");
 
         AlertDialog.Builder menu = new AlertDialog.Builder(this);
+        //crete filter search
+        //set title for filter search
 
-        //System.out.println("THE ID IS: " + id);
         if (id == 4) {
             return new AlertDialog.Builder(this).setTitle("Ingredient on Hand")
                     .setMultiChoiceItems(_useFridge, _fridgeSelection, new DialogSelectionClickHandler("fridge", _useFridge))
@@ -236,17 +259,26 @@ public class MainActivity extends NavBaseActivity {
 
     }
 
+    /**
+     *
+     */
     public class DialogSelectionClickHandler implements DialogInterface.OnMultiChoiceClickListener {
         CharSequence[] current;
         String id;
 
+        /**
+         *
+         * @param _id
+         * @param temp
+         */
         public DialogSelectionClickHandler(String _id, CharSequence[] temp){
             current = temp;
             id = _id;
         }
 
-        public void onClick(DialogInterface dialog, int clicked, boolean selected) {
 
+        public void onClick(DialogInterface dialog, int clicked, boolean selected) {
+            // item is selected from filter search options
             if(selected) {
                 if (id.equalsIgnoreCase("cuisine")) {
                     selection = (String) current[clicked];
@@ -329,11 +361,9 @@ public class MainActivity extends NavBaseActivity {
     public void searchByIngredient()
     {
         Bundle bundle = new Bundle();
-
-
         bundle.putString("search", et.getText().toString());
         if(selection != null)
-            bundle.putString("cuisine", selection.toString());
+            bundle.putString("cuisine", selection.toString());/*use cuisine*/
         if(selections != null)
             bundle.putString("seasonal",selections.toString());/*use seasonal*/
         if(allergySelection != null)
@@ -341,6 +371,7 @@ public class MainActivity extends NavBaseActivity {
         if(fridgeSelection != null)
             bundle.putString("useFridge",fridgeSelection.toString());/*Use Fridge */
 
+        //while loading any activity
         Intent i = new Intent(this, LoadingActivity.class);
         i.putExtras(bundle);
         startActivity(i);
@@ -348,7 +379,6 @@ public class MainActivity extends NavBaseActivity {
     }
 
     public void search(View v)
-
 
     {
         String emptyString = et.getText().toString();
