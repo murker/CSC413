@@ -49,11 +49,10 @@ public class NavBaseActivity extends ActionBarActivity {
     private DrawerLayout mDrawerLayout;
     private ListView mDrawerList;
     private ActionBarDrawerToggle mDrawerToggle;
-    protected RelativeLayout _completeLayout, _activityLayout;
     private CharSequence mDrawerTitle;
     private CharSequence mTitle;
-    private ArrayList<NavDrawerItem> navDrawerItems;
-    private NavDrawerListAdapter adapter;
+    private ArrayList<NavDrawer> navDrawers;
+    private NavDrawerAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,28 +70,28 @@ public class NavBaseActivity extends ActionBarActivity {
         mTitle = mDrawerTitle = getTitle();
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         mDrawerList = (ListView) findViewById(R.id.left_drawer);
-        navDrawerItems = new ArrayList<NavDrawerItem>();
+        navDrawers = new ArrayList<NavDrawer>();
 
         // adding nav drawer items
         if (navMenuIcons == null) {
             for (int i = 0; i < navMenuTitles.length; i++) {
-                navDrawerItems.add(new NavDrawerItem(navMenuTitles[i]));
+                navDrawers.add(new NavDrawer(navMenuTitles[i]));
             }
         } else {
             for (int i = 0; i < navMenuTitles.length; i++) {
-                navDrawerItems.add(new NavDrawerItem(navMenuTitles[i],
+                navDrawers.add(new NavDrawer(navMenuTitles[i],
                         navMenuIcons.getResourceId(i, -1)));
             }
         }
 
         mDrawerList.setOnItemClickListener(new SlideMenuClickListener());
 
-        // setting the nav drawer list adapter
-        adapter = new NavDrawerListAdapter(getApplicationContext(),
-                navDrawerItems);
+        // setting the nav drawer adapter
+        adapter = new NavDrawerAdapter(getApplicationContext(),
+                navDrawers);
         mDrawerList.setAdapter(adapter);
 
-        // enabling action bar app icon and behaving it as toggle button
+        // turning on app icon in action bar
         getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.menu_icon);
@@ -104,12 +103,10 @@ public class NavBaseActivity extends ActionBarActivity {
         ) {
             public void onDrawerClosed(View view) {
                 getSupportActionBar().setTitle(mTitle);
-                // calling onPrepareOptionsMenu() to show action bar icons
                 supportInvalidateOptionsMenu();
             }
             public void onDrawerOpened(View drawerView) {
                 getSupportActionBar().setTitle(mDrawerTitle);
-                // calling onPrepareOptionsMenu() to hide action bar icons
                 supportInvalidateOptionsMenu();
             }
         };
@@ -133,7 +130,6 @@ public class NavBaseActivity extends ActionBarActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // getSupportMenuInflater().inflate(R.menu.main, menu);
         return true;
     }
 
@@ -150,9 +146,6 @@ public class NavBaseActivity extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    /**
-     * Called when invalidateOptionsMenu() is triggered
-     */
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
         return super.onPrepareOptionsMenu(menu);
@@ -199,12 +192,12 @@ public class NavBaseActivity extends ActionBarActivity {
                 break;
         }
 
-        // update selected item and title, then close the drawer
+        // update selected menu title and close nav drawer
         mDrawerList.setItemChecked(position, true);
         mDrawerList.setSelection(position);
         mDrawerLayout.closeDrawer(mDrawerList);
     }
-
+    
     @Override
     public void setTitle(CharSequence title) {
         mTitle = title;
@@ -214,14 +207,12 @@ public class NavBaseActivity extends ActionBarActivity {
     @Override
     protected void onPostCreate(Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
-        // Sync the toggle state after onRestoreInstanceState has occurred.
         mDrawerToggle.syncState();
     }
 
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
-        // Pass any configuration change to the drawer toggls
         mDrawerToggle.onConfigurationChanged(newConfig);
     }
 }

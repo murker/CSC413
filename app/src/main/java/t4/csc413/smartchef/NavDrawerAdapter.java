@@ -13,27 +13,28 @@ import android.widget.TextView;
 /**
  * Created by MG
  * This adapter provides access to the data items.
- * The Adapter is also responsible for making a View for each item in the data set.
+ * Class also handle how classes that extend NavBaseActivity are involved with showing
+ * the navigation drawer.
  */
 
-public class NavDrawerListAdapter extends BaseAdapter {
+public class NavDrawerAdapter extends BaseAdapter {
 
     private Context context;
-    private ArrayList<NavDrawerItem> navDrawerItems;
+    private ArrayList<NavDrawer> navDrawers;
 
-    public NavDrawerListAdapter(Context context, ArrayList<NavDrawerItem> navDrawerItems){
+    public NavDrawerAdapter(Context context, ArrayList<NavDrawer> navDrawers){
         this.context = context;
-        this.navDrawerItems = navDrawerItems;
+        this.navDrawers = navDrawers;
     }
 
     @Override
     public int getCount() {
-        return navDrawerItems.size();
+        return navDrawers.size();
     }
 
     @Override
     public Object getItem(int position) {
-        return navDrawerItems.get(position);
+        return navDrawers.get(position);
     }
 
     @Override
@@ -41,6 +42,13 @@ public class NavDrawerListAdapter extends BaseAdapter {
         return position;
     }
 
+    /**
+     *
+     * @param position position of object on the drawer list
+     * @param convertView View that is displayed
+     * @param parent
+     * @return Updated View that reflects changes to drawer
+     */
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         if (convertView == null) {
@@ -52,8 +60,9 @@ public class NavDrawerListAdapter extends BaseAdapter {
         ImageView imgIcon = (ImageView) convertView.findViewById(R.id.icon);
         TextView txtTitle = (TextView) convertView.findViewById(R.id.title);
 
-        imgIcon.setImageResource(navDrawerItems.get(position).getIcon());
-        txtTitle.setText(navDrawerItems.get(position).getTitle());
+        //settings icons and title
+        imgIcon.setImageResource(navDrawers.get(position).getIcon());
+        txtTitle.setText(navDrawers.get(position).getTitle());
 
         return convertView;
     }

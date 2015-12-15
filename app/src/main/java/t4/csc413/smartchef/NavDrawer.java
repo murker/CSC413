@@ -5,20 +5,18 @@ package t4.csc413.smartchef;
  * Getters and Setters for the NavDrawer
  */
 
-public class NavDrawerItem {
+public class NavDrawer {
     private String title;
     private int icon;
 
-    public NavDrawerItem() {
-        // default constructor
-    }
+    public NavDrawer() { }
 
-    public NavDrawerItem(String title, int icon) {
+    public NavDrawer(String title, int icon) {
         this.title = title;
         this.icon = icon;
     }
 
-    public NavDrawerItem(String title) {
+    public NavDrawer(String title) {
         this.title = title;
     }
 
