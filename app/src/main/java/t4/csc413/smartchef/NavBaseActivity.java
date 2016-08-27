@@ -159,33 +159,33 @@ public class NavBaseActivity extends ActionBarActivity {
     private void displayView(int position) {
         switch (position) {
             case 0:
-                Intent intent = new Intent(this, MainActivity.class);
-                startActivity(intent);
+                Intent mainActivity = new Intent(this, MainActivity.class);
+                startActivity(mainActivity);
                 finish();
                 break;
             case 1:
-                Intent intent1 = new Intent(this, MapsActivity.class);
-                startActivity(intent1);
+                Intent mapsActivity = new Intent(this, MapsActivity.class);
+                startActivity(mapsActivity);
                 finish();
                 break;
             case 2:
-                Intent intent2 = new Intent(this, EvernoteActivity.class);
-                startActivity(intent2);
+                Intent everNoteActivity = new Intent(this, EvernoteActivity.class);
+                startActivity(everNoteActivity);
                 finish();
                 break;
             case 3:
-                Intent intent3 = new Intent (this, RecipeDBLayout.class);
-                startActivity(intent3);
+                Intent recipeDBLayout = new Intent (this, RecipeDBLayout.class);
+                startActivity(recipeDBLayout);
                 finish();
                 break;
             case 4:
-                Intent intent4 = new Intent (this, ShoppingListLayout.class);
-                startActivity(intent4);
+                Intent shoppingListLayout = new Intent (this, ShoppingListLayout.class);
+                startActivity(shoppingListLayout);
                 finish();
                 break;
             case 5:
-                Intent intent5 = new Intent (this, FridgeLayout.class);
-                startActivity(intent5);
+                Intent fridgeLayout = new Intent (this, FridgeLayout.class);
+                startActivity(fridgeLayout);
                 finish();
                 break;
             default:
@@ -197,7 +197,7 @@ public class NavBaseActivity extends ActionBarActivity {
         mDrawerList.setSelection(position);
         mDrawerLayout.closeDrawer(mDrawerList);
     }
-    
+
     @Override
     public void setTitle(CharSequence title) {
         mTitle = title;
